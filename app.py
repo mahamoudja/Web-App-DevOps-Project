@@ -46,6 +46,7 @@ class Order(Base):
     product_quantity = Column('Product Quantity', Integer)
     order_date = Column('Order Date', DateTime)
     shipping_date = Column('Shipping Date', DateTime)
+    delivery_date = Column('Delivery Date', DateTime)
 
 # define routes
 # route to display orders
@@ -78,6 +79,7 @@ def display_orders():
 @app.route('/add_order', methods=['POST'])
 def add_order():
     date_uuid = request.form.get('date_uuid')
+    delivery_date = request.form['delivery_date'] 
     user_id = request.form.get('user_id')
     card_number = request.form.get('card_number')
     store_code = request.form.get('store_code')
@@ -99,6 +101,8 @@ def add_order():
         product_quantity=product_quantity,
         order_date=order_date,
         shipping_date=shipping_date
+        delivery_date=delivery_date# Add this line
+
     )
 
     # Add the new order to the session and commit to the database
@@ -109,4 +113,4 @@ def add_order():
 
 # run the app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
